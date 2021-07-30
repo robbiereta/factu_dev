@@ -29,7 +29,7 @@ for (let index = 0; index < tickets.length; index++) {
 var fecha = moment().format("MMMM Do YYYY, h:mm:ss a");
 const Facturapi = require("facturapi");
 const receipt = require("receipt");
-const facturapi = new Facturapi("sk_test_VN9W1bQmxaKq2e4j6x81ry870rkwYEXe");
+const facturapi = new Facturapi("sk_live_NpE3r9Rl4KadW4JQNm5WM17oXQVng6xZ");
 
 function nuevoCorte(params) {
   var fechaCorte = Date.now();
