@@ -21,10 +21,10 @@ var notas = {
 };
 var output;
 var tickets = [];
+var $ = jquery;
 var elements;
 for (let index = 0; index < tickets.length; index++) {
   const element = tickets[index];
-  
 }
 var fecha = moment().format("MMMM Do YYYY, h:mm:ss a");
 const Facturapi = require("facturapi");
@@ -33,10 +33,6 @@ const facturapi = new Facturapi("sk_test_VN9W1bQmxaKq2e4j6x81ry870rkwYEXe");
 
 function nuevoCorte(params) {
   var fechaCorte = Date.now();
-  db.insert(fechaCorte, function (err, newDoc) {
-    // Callback is optional
-    console.log(newDoc);
-  });
 }
 var url;
 var folio;
@@ -48,54 +44,10 @@ async function recibo() {
   url = receipt2.self_invoice_url;
   folio = receipt2.folio_number;
   console.log(url);
-  receipt.config.currency = "$"; // The currency symbol to use in output.
-  receipt.config.width = 100; // The amount of characters used to give the output a "width".
-  receipt.config.ruler = "="; // The character used for ruler output.
 
-  output = receipt.create([
-    {
-      type: "text",
-      value: [
-        "Alma Alicia Flores Zavala",
-        "FOZA8801257C2",
-        "Carrera Torres 742 Heroe de Nacozari",
-        "Ciudad Victoria,Tamps. C.P.87030",
-      ],
-      align: "center"
-    },
-    { type: "empty" },
-    {
-      type: "properties",
-      lines: [
-        { name: "folio", value: folio },
-        { name: "Fecha", value: fecha }
-      ]
-    },
-    { type: "table", lines: tickets },
-    { type: "empty" },
-
-    { type: "empty" },
-    {
-      type: "properties",
-      lines: [{ name: "Total", value: total }]
-    },
-    { type: "empty" },
-    {
-      type: "properties",
-      lines: [
-        { name: "Recibi", value: "" },
-        { name: "Cambio", value: "" }
-      ]
-    },
-    { type: "empty" },
-    {
-      type: "text",
-      value: ["NOTA:para facturar este recibo entra a :" + url]
-    }
-  ]);
-
-  console.log(output);
-  
+  $("#factura").append(url);
+  $("#num_recibo").append(folio);
+  $("#recibo").click();
 }
 
 async function global(params) {
@@ -104,13 +56,53 @@ async function global(params) {
     to: "2021-07-10T17:00:00.000Z"
   });
 }
+var ticket = (
+  <div id="ticket">
+    <div id="invoice-POS">
+      <div id="mid">
+        <div class="info">
+          <p id="num_recibo">Recibo No.</p>
+          <p>Alma Alicia Flores Zavala</p>
+          <p>
+            FOZA8801257C2 Carrera Torres 742 Heroe de Nacozari Ciudad Victoria
+            Tamps. c.p.87030
+          </p>
+        </div>
+      </div>
 
+      <div id="bot">
+        <div id="table">
+          <table id="tableElement">
+            <tr class="tabletitle">
+              <td class="item">Cantidad</td>
+              <td class="Hours">Producto</td>
+              <td class="Rate">Importe</td>
+            </tr>
+
+            <tr class="tabletitle" id="totalTicket">
+              <td class="Rate">
+                <p>Total</p>
+              </td>
+              <td class="payment">
+                <p id="total">0</p>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div id="factura">
+          Si necesita factura de este recibo favor de entrar a :
+        </div>
+      </div>
+    </div>
+  </div>
+);
 export default function fact() {
   const { register, handleSubmit } = useForm();
   const onSubmit = (data) => jsonCambio(data);
   const [basicModal, setBasicModal] = useState(false);
 
-  const toggleShow = () =>setBasicModal(!basicModal); 
+  const toggleShow = () => setBasicModal(!basicModal);
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -121,13 +113,15 @@ export default function fact() {
           placeholder="Descripcion"
         />
         <input type="number" {...register("cantidad")} placeholder="cantidad" />
-      
-        <input type="submit"  value="agregar" />
-      
+
+        <input type="submit" value="agregar" />
       </form>
+      {ticket}
       <MDBBtn onClick={recibo}>Hacer recibo</MDBBtn>
       <>
-        <MDBBtn onClick={toggleShow}>Ver recibo</MDBBtn>
+        <MDBBtn id="recibo" onClick={toggleShow}>
+          Ver recibo
+        </MDBBtn>
         <MDBModal
           show={basicModal}
           getOpenState={(e: any) => setBasicModal(e)}
@@ -143,67 +137,13 @@ export default function fact() {
                   onClick={toggleShow}
                 ></MDBBtn>
               </MDBModalHeader>
-              <MDBModalBody>
-                <div id="ticket">
-
-  <div id="invoice-POS">
-    
-    <center id="top">
-      <div class="logo"></div>
-      <div class="info"> 
-        <h2>SBISTechs Inc</h2>
-      </div>
-    </center>
-    
-    <div id="mid">
-      <div class="info">
-        <h2>Contact Info</h2>
-        <p> 
-            Address : street city, state 0000
-            Email   : JohnDoe@gmail.com
-            Phone   : 555-555-5555
-        </p>
-      </div>
-    </div>
-    
-    <div id="bot">
-
-					<div id="table">
-						<table id="tableElement">
-							<tr class="tabletitle">
-								<td class="item"><h2>Producto</h2></td>
-								<td class="Hours"><h2>Can</h2></td>
-								<td class="Rate"><h2>Importe</h2></td>
-							</tr>
-
-							
-							
-
-							 <tr class="tabletitle">
-								<td></td>
-								<td class="Rate"><h2>Total</h2></td>
-								<td class="payment"><h2 id="total">0</h2></td>
-							</tr> 
-
-						</table>
-					</div>
-
-					<div id="legalcopy">
-						<p class="legal"><strong>Thank you for your business!</strong>  Payment is expected within 31 days; please process this invoice within that time. There will be a 5% interest charge per month on late invoices. 
-						</p>
-					</div>
-
-				</div>
-  </div>
-
-                </div>
-              </MDBModalBody>
+              <MDBModalBody>{ticket}</MDBModalBody>
 
               <MDBModalFooter>
                 <MDBBtn color="secondary" onClick={toggleShow}>
-                  Close
+                  Cerrar
                 </MDBBtn>
-                <MDBBtn onClick={print}>print</MDBBtn>
+                <MDBBtn onClick={print}>Imprimir</MDBBtn>
               </MDBModalFooter>
             </MDBModalContent>
           </MDBModalDialog>
@@ -213,9 +153,8 @@ export default function fact() {
   );
 }
 function print(ticket) {
-  var printContents = output;
+  var printContents = document.getElementById("ticket").innerHTML;
   var originalContents = document.body.innerHTML;
-
   document.body.innerHTML = printContents;
 
   window.print();
@@ -229,7 +168,7 @@ async function jsonCambio(data) {
   var imp = data.precio;
   var d1 = new Date();
   var d2 = Date.now();
-var imp_ticket =Number(imp)
+  var imp_ticket = Number(imp);
   var newCon = {
     product: {
       description: "VENTA",
@@ -259,17 +198,16 @@ var imp_ticket =Number(imp)
   // db.insert(newCon, function (err, newDoc) {   // Callback is optional
   //   console.log(newDoc);
   // });
-  jquery(
-    "<h1>Cantidad:" +
+
+  jquery("#totalTicket").prepend(
+    "<tr class='service'><td class='tableitem'><p class='itemtext'>" +
       data.cantidad +
-      "/" +
+      "</p></td> <td class='tableitem'><p class='itemtext'>" +
       data.descripcion +
-      "/importe" +
-      imp +
-      "</h1>"
-  ).appendTo("#root");
-  jquery("<tr class='service'><td class='tableitem'><p class='itemtext'>"+data.descripcion +"</p></td> <td class='tableitem'><p class='itemtext'>"+data.cantidad+"</p></td><td class='tableitem'><p class='itemtext'>"+imp_ticket+"</p></td> </tr>"
-  ).appendTo("#tableElement");
-   
-  jquery("<h1>Total:" + total + "</h1>").appendTo("#root");
+      "</p></td><td class='tableitem'><p class='itemtext'>" +
+      imp_ticket +
+      "</p></td> </tr>"
+  );
+
+  jquery("#total").text(total);
 }
