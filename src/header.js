@@ -17,6 +17,7 @@ import {
   MDBCollapse
 } from "mdb-react-ui-kit";
 import Fact from "./form_fact.js";
+import Recibo from "./recibos.js";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 export default function Navbar() {
@@ -42,6 +43,9 @@ export default function Navbar() {
               <MDBNavbarItem>
                 <Link to="/">Punto de venta</Link>
               </MDBNavbarItem>
+              <MDBNavbarItem>
+                <Link to="/recibos">Recibos</Link>
+              </MDBNavbarItem>
             </MDBNavbarNav>
           </MDBCollapse>
         </MDBContainer>
@@ -51,6 +55,9 @@ export default function Navbar() {
       <Switch>
         <Route path="/">
           <Fact />
+        </Route>
+        <Route path="/recibos">
+          <Recibo />
         </Route>
       </Switch>
     </Router>

@@ -6,7 +6,7 @@ import DropDown from "./select.js";
 import { DataGrid } from "@material-ui/data-grid";
 
 const Facturapi = require("facturapi");
-const facturapi = new Facturapi("");
+const facturapi = new Facturapi("sk_live_NpE3r9Rl4KadW4JQNm5WM17oXQVng6xZ");
 var folio;
 var lista = {
   recibos: []
