@@ -46,7 +46,6 @@ async function recibo() {
   console.log(url);
 
   $("#factura").append(url);
-  $("#num_recibo").append(folio);
   $("#recibo").click();
 }
 
