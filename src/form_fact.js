@@ -144,7 +144,59 @@ export default function fact() {
                 ></MDBBtn>
               </MDBModalHeader>
               <MDBModalBody>
-                <div id="ticket">{tickets}</div>
+                <div id="ticket">
+
+  <div id="invoice-POS">
+    
+    <center id="top">
+      <div class="logo"></div>
+      <div class="info"> 
+        <h2>SBISTechs Inc</h2>
+      </div>
+    </center>
+    
+    <div id="mid">
+      <div class="info">
+        <h2>Contact Info</h2>
+        <p> 
+            Address : street city, state 0000
+            Email   : JohnDoe@gmail.com
+            Phone   : 555-555-5555
+        </p>
+      </div>
+    </div>
+    
+    <div id="bot">
+
+					<div id="table">
+						<table id="tableElement">
+							<tr class="tabletitle">
+								<td class="item"><h2>Producto</h2></td>
+								<td class="Hours"><h2>Can</h2></td>
+								<td class="Rate"><h2>Importe</h2></td>
+							</tr>
+
+							
+							
+
+							 <tr class="tabletitle">
+								<td></td>
+								<td class="Rate"><h2>Total</h2></td>
+								<td class="payment"><h2 id="total">0</h2></td>
+							</tr> 
+
+						</table>
+					</div>
+
+					<div id="legalcopy">
+						<p class="legal"><strong>Thank you for your business!</strong>  Payment is expected within 31 days; please process this invoice within that time. There will be a 5% interest charge per month on late invoices. 
+						</p>
+					</div>
+
+				</div>
+  </div>
+
+                </div>
               </MDBModalBody>
 
               <MDBModalFooter>
@@ -177,7 +229,7 @@ async function jsonCambio(data) {
   var imp = data.precio;
   var d1 = new Date();
   var d2 = Date.now();
-
+var imp_ticket =Number(imp)
   var newCon = {
     product: {
       description: "VENTA",
@@ -216,5 +268,8 @@ async function jsonCambio(data) {
       imp +
       "</h1>"
   ).appendTo("#root");
+  jquery("<tr class='service'><td class='tableitem'><p class='itemtext'>"+data.descripcion +"</p></td> <td class='tableitem'><p class='itemtext'>"+data.cantidad+"</p></td><td class='tableitem'><p class='itemtext'>"+imp_ticket+"</p></td> </tr>"
+  ).appendTo("#tableElement");
+   
   jquery("<h1>Total:" + total + "</h1>").appendTo("#root");
 }
