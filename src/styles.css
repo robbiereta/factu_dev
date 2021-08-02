@@ -1,6 +1,12 @@
 div#ticket {
   width: 40%;
 }
+button#recibo {
+  display: none;
+}
 body {
   font-family: Roboto, Helvetica, Arial, sans-serif;
+}
+button.ripple.ripple-surface.btn.btn-primary {
+  margin-top: 10em;
 }
