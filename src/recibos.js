@@ -60,7 +60,6 @@ export default function Recibo() {
         checkboxSelection
         disableSelectionOnClick
       />
-      <button onClick={global}>global</button>
     </div>
   );
 }

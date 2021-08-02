@@ -174,10 +174,10 @@ async function jsonCambio(data) {
   var imp_ticket = Number(imp);
   var newCon = {
     product: {
-      description: "VENTA",
-      product_key: "01010101",
+      description: data.descripcion,
+      product_key: "25174700",
       price: Number(imp),
-      unit_key: "ACT"
+      unit_key: "H87"
     },
     fecha: d1.toString(),
     seconds: d2
