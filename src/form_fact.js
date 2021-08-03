@@ -29,7 +29,7 @@ for (let index = 0; index < tickets.length; index++) {
 var fecha = moment().format("MMMM Do YYYY, h:mm:ss a");
 const Facturapi = require("facturapi");
 const receipt = require("receipt");
-const facturapi = new Facturapi("sk_live_NpE3r9Rl4KadW4JQNm5WM17oXQVng6xZ");
+const facturapi = new Facturapi("sk_test_VN9W1bQmxaKq2e4j6x81ry870rkwYEXe");
 
 function nuevoCorte(params) {
   var fechaCorte = Date.now();
@@ -41,7 +41,7 @@ async function recibo() {
     payment_form: Facturapi.PaymentForm.EFECTIVO,
     items: notas.partidas
   });
-  url = receipt2.self_invoice_url;
+  url = "<h6>" + receipt2.self_invoice_url + "</h61>";
   folio = receipt2.folio_number;
   console.log(url);
 
@@ -49,12 +49,6 @@ async function recibo() {
   $("#recibo").click();
 }
 
-async function global(params) {
-  await facturapi.receipts.createGlobalInvoice({
-    from: "2021-07-30T11:00:00.000Z",
-    to: "2021-07-30T20:08:37.166Z"
-  });
-}
 var ticket = (
   <div id="ticket">
     <div id="invoice-POS">
@@ -91,7 +85,7 @@ var ticket = (
         </div>
 
         <div id="factura">
-          Si necesita factura de este recibo favor de entrar a :
+          <h3>Si necesita factura de este recibo favor de entrar a :</h3>
         </div>
       </div>
     </div>

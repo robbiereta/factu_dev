@@ -10,3 +10,6 @@ body {
 button.ripple.ripple-surface.btn.btn-primary {
   margin-top: 10em;
 }
+div#factura {
+  margin-left: -2em;
+}
