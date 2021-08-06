@@ -6,7 +6,7 @@ import DropDown from "./select.js";
 import { DataGrid } from "@material-ui/data-grid";
 
 const Facturapi = require("facturapi");
-const facturapi = new Facturapi("");
+const facturapi = new Facturapi("sk_test_VN9W1bQmxaKq2e4j6x81ry870rkwYEXe");
 var folio;
 var lista = {
   recibos: []
@@ -60,7 +60,6 @@ export default function Recibo() {
         checkboxSelection
         disableSelectionOnClick
       />
-      <button onClick={global}>global</button>
     </div>
   );
 }

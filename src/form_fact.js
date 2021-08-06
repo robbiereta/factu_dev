@@ -41,27 +41,19 @@ async function recibo() {
     payment_form: Facturapi.PaymentForm.EFECTIVO,
     items: notas.partidas
   });
-  url = receipt2.self_invoice_url;
+  url = "<h6>" + receipt2.self_invoice_url + "</h61>";
   folio = receipt2.folio_number;
   console.log(url);
 
   $("#factura").append(url);
-  $("#num_recibo").append(folio);
   $("#recibo").click();
 }
 
-async function global(params) {
-  await facturapi.receipts.createGlobalInvoice({
-    from: "2021-07-10T11:00:00.000Z",
-    to: "2021-07-10T17:00:00.000Z"
-  });
-}
 var ticket = (
   <div id="ticket">
     <div id="invoice-POS">
       <div id="mid">
         <div class="info">
-          <p id="num_recibo">Recibo No.</p>
           <p>Alma Alicia Flores Zavala</p>
           <p>
             FOZA8801257C2 Carrera Torres 742 Heroe de Nacozari Ciudad Victoria
@@ -73,25 +65,27 @@ var ticket = (
       <div id="bot">
         <div id="table">
           <table id="tableElement">
-            <tr class="tabletitle">
-              <td class="item">Cantidad</td>
-              <td class="Hours">Producto</td>
-              <td class="Rate">Importe</td>
-            </tr>
+            <tbody>
+              <tr class="tabletitle">
+                <td class="item">Cantidad</td>
+                <td class="Hours">Producto</td>
+                <td class="Rate">Importe</td>
+              </tr>
 
-            <tr class="tabletitle" id="totalTicket">
-              <td class="Rate">
-                <p>Total</p>
-              </td>
-              <td class="payment">
-                <p id="total">0</p>
-              </td>
-            </tr>
+              <tr class="tabletitle" id="totalTicket">
+                <td class="Rate">
+                  <p>Total</p>
+                </td>
+                <td class="payment">
+                  <p id="total">0</p>
+                </td>
+              </tr>
+            </tbody>
           </table>
         </div>
 
         <div id="factura">
-          Si necesita factura de este recibo favor de entrar a :
+          <h3>Si necesita factura de este recibo favor de entrar a :</h3>
         </div>
       </div>
     </div>
@@ -114,10 +108,13 @@ export default function fact() {
         />
         <input type="number" {...register("cantidad")} placeholder="cantidad" />
 
-        <input type="submit" value="agregar" />
+        <MDBBtn color="success" type="submit" value="agregar">
+          Agregar{" "}
+        </MDBBtn>
       </form>
-      {ticket}
+      <div id="ticket_content"></div>
       <MDBBtn onClick={recibo}>Hacer recibo</MDBBtn>
+
       <>
         <MDBBtn id="recibo" onClick={toggleShow}>
           Ver recibo
@@ -171,10 +168,10 @@ async function jsonCambio(data) {
   var imp_ticket = Number(imp);
   var newCon = {
     product: {
-      description: "VENTA",
-      product_key: "01010101",
+      description: data.descripcion,
+      product_key: "25174700",
       price: Number(imp),
-      unit_key: "ACT"
+      unit_key: "H87"
     },
     fecha: d1.toString(),
     seconds: d2
@@ -208,6 +205,15 @@ async function jsonCambio(data) {
       imp_ticket +
       "</p></td> </tr>"
   );
-
+  jquery("#ticket_content").append(
+    "<tr class='service'><td class='tableitem'><p class='itemtext'>" +
+      data.cantidad +
+      "</p></td> <td class='tableitem'><p class='itemtext'>" +
+      data.descripcion +
+      "</p></td><td class='tableitem'><p class='itemtext'>" +
+      imp_ticket +
+      "</p></td> </tr>"
+  );
+  jquery("#ticket_content").append("total:" + total);
   jquery("#total").text(total);
 }
