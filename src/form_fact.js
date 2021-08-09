@@ -103,11 +103,7 @@ export default function fact() {
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <input type="number" {...register("precio")} placeholder="Precio" />
-        <select
-          id="select"
-          {...register("descripcion2")}
-          placeholder="Descripcion"
-        ></select>
+
         <input type="number" {...register("cantidad")} placeholder="cantidad" />
         <input
           type="text"
