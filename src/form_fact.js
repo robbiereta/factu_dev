@@ -15,7 +15,8 @@ import {
 } from "mdb-react-ui-kit";
 
 import "./styles.css";
-
+import "./styles.css";
+import DropDown from "./select";
 var notas = {
   partidas: []
 };
@@ -29,7 +30,7 @@ for (let index = 0; index < tickets.length; index++) {
 var fecha = moment().format("MMMM Do YYYY, h:mm:ss a");
 const Facturapi = require("facturapi");
 const receipt = require("receipt");
-const facturapi = new Facturapi("sk_test_VN9W1bQmxaKq2e4j6x81ry870rkwYEXe");
+const facturapi = new Facturapi("sk_live_NpE3r9Rl4KadW4JQNm5WM17oXQVng6xZ");
 
 function nuevoCorte(params) {
   var fechaCorte = Date.now();
@@ -91,6 +92,7 @@ var ticket = (
     </div>
   </div>
 );
+
 export default function fact() {
   const { register, handleSubmit } = useForm();
   const onSubmit = (data) => jsonCambio(data);
@@ -101,15 +103,20 @@ export default function fact() {
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <input type="number" {...register("precio")} placeholder="Precio" />
+        <select
+          id="select"
+          {...register("descripcion2")}
+          placeholder="Descripcion"
+        ></select>
+        <input type="number" {...register("cantidad")} placeholder="cantidad" />
         <input
           type="text"
           {...register("descripcion")}
-          placeholder="Descripcion"
+          placeholder="producto"
         />
-        <input type="number" {...register("cantidad")} placeholder="cantidad" />
 
         <MDBBtn color="success" type="submit" value="agregar">
-          Agregar{" "}
+          Agregar{""}
         </MDBBtn>
       </form>
       <div id="ticket_content"></div>
@@ -166,12 +173,22 @@ async function jsonCambio(data) {
   var d1 = new Date();
   var d2 = Date.now();
   var imp_ticket = Number(imp);
+  var clave;
+  var unidad;
+  if (data.descripcion === "reparacion") {
+    clave = "78181500";
+    unidad = "E48";
+  } else {
+    clave = "25174700";
+    unidad = "H87";
+  }
+
   var newCon = {
     product: {
       description: data.descripcion,
-      product_key: "25174700",
+      product_key: clave,
       price: Number(imp),
-      unit_key: "H87"
+      unit_key: unidad
     },
     fecha: d1.toString(),
     seconds: d2
@@ -184,7 +201,7 @@ async function jsonCambio(data) {
   notas.partidas.push(newCon);
 
   tickets.push(newCon2);
-  console.log(tickets);
+  console.log(notas.partidas);
 
   total = 0;
   notas.partidas.forEach(function (obj) {
